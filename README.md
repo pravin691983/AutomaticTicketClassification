@@ -5,7 +5,7 @@
 ## Table of Contents
 
 - [Overview Business Understanding](#overview-business-understanding)
-- [Problem Statement Business Objectives](#problem-statement-business-objectives)
+- [Problem Statement Business Goal](#problem-statement-business-goal)
 - [Data in depth](#data-in-depth)
 - [Approach](#approach)
 - [Technologies Used](#technologies-used)
