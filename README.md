@@ -1,10 +1,6 @@
-# Identifying Entities in Healthcare Data
+# Automatic Ticket Classification
 
-> BeHealthy require predictive model which can identify disease and treatment from the patients interaction with doctor or ordering medicines online.
-> By observing the requirement, it is clearly visible that we have to process the textual sentence and identify the entities like Disease and Treatment. We can predict these all requirements using
-
-- CRF (Conditional Random Field) classifier
-- HMM (Hidden Markov Model).
+> In this case study, we will create a model that can automatically classify customer complaints based on the products and services that the ticket mentions.
 
 ## Table of Contents
 
@@ -19,72 +15,48 @@
 
 ## Overview Business Understanding
 
-Now, let’s consider a hypothetical example of a health tech company called ‘BeHealthy’. Suppose ‘BeHealthy’ aims to connect the medical communities with millions of patients across the country.
+For a financial company, customer complaints carry a lot of importance, as they are often an indicator of the shortcomings in their products and services. If these complaints are resolved efficiently in time, they can bring down customer dissatisfaction to a minimum and retain them with stronger loyalty. This also gives them an idea of how to continuously improve their services to attract more customers.
 
-‘BeHealthy’ has a web platform that allows doctors to list their services and manage patient interactions and provides services for patients such as booking interactions with doctors and ordering medicines online. Here, doctors can easily organise appointments, track past medical records and provide e-prescriptions.
+These customer complaints are unstructured text data; so, traditionally, companies need to allocate the task of evaluating and assigning each ticket to the relevant department to multiple support employees. This becomes tedious as the company grows and has a large customer base.
 
-So, companies like ‘BeHealthy’ are providing medical services, prescriptions and online consultations and generating huge data day by day.
+In this case study, you will be working as an NLP engineer for a financial company that wants to automate its customer support tickets system. As a financial company, the firm has many products and services such as credit cards, banking and mortgages/loans.
 
-Let’s take a look at the following snippet of medical data that may be generated when a doctor is writing notes to his/her patient or as a review of a therapy that he or she has done.
+## Problem Statement Business Goal
 
-“The patient was a 62-year-old man with squamous cell lung cancer, which was first successfully treated by a combination of radiation therapy and chemotherapy.”
+You need to build a model that is able to classify customer complaints based on the products/services. By doing so, you can segregate these tickets into their relevant categories and, therefore, help in the quick resolution of the issue.
 
-As you can see in this text, a person with a non-medical background cannot understand the various medical terms. We have taken a simple sentence from a medical data set to understand the problem and where you can understand the terms ‘cancer’ and ‘chemotherapy’.
+With the help of non-negative matrix factorization (NMF), an approach under topic modelling, you will detect patterns and recurring words present in each ticket. This can be then used to understand the important features for each cluster of categories. By segregating the clusters, you will be able to identify the topics of the customer complaints.
 
-Suppose you have been given such a data set in which a lot of text is written related to the medical domain. As you can see in the dataset, there are a lot of diseases that can be mentioned in the entire dataset and their related treatments are also mentioned implicitly in the text, which you saw in the aforementioned example that the disease mentioned is cancer and its treatment can be identified as chemotherapy using the sentence.
+You will be doing topic modelling on the .json data provided by the company. Since this data is not labelled, you need to apply NMF to analyse patterns and classify tickets into the following five clusters based on their products/services:
 
-But, note that it is not explicitly mentioned in the dataset about the diseases and their treatment, but somehow, you can build an algorithm to map the diseases and their respective treatment.
+- Credit card / Prepaid card
+- Bank account services
+- Theft/Dispute reporting
+- Mortgages/loans
+- Others
 
-Suppose you have been asked to determine the disease name and its probable treatment from the dataset and list it out in the form of a table or a dictionary like this.
-
-<p>
-<img src ="https://images.upgrad.com/0891d77b-b9ca-4e9d-8934-d9a9b078a51c-syntactic%20sol%20pic1.png" alt='Figure 1'>
-<center> <b>Figure 1.</b> </center> 
- </br>  
-</p>
-
-## Problem Statement Business Objectives
-
-BeHealthy require predictive model which can identify disease and treatment from the patients interaction with doctor or ordering medicines online.
-By observing the requirement, it is clearly visible that we have to process the textual sentence and identify the entities like Disease and Treatment. We can predict these all requirements using
-
-- CRF (Conditional Random Field) classifier
-- HMM (Hidden Markov Model)
-
-### Want to
-
-- Identifying Entities in Healthcare Data using CRF (Conditional Random Field) classifier
+With the help of topic modelling, you will be able to map each ticket onto its respective department/category. You can then use this data to train any supervised model such as logistic regression, decision tree or random forest. Using this trained model, you can classify any new customer complaint support ticket into its relevant department.
 
 ## Data in depth
 
-It contains four data file for this activity to proceed, they are
-
-- Train Sentence Dataset
-- Train Label Dataset
-- Test Sentence Dataset
-- Test Label Dataset
-
-  Sentence file contains all interations between patients and doctor and Label file contains all enitiy tags for particular words arranged as per sentence. We need to do few preprocessing while accessing dataset we will explore that in further steps.
-  We have the train and the test datasets; the train dataset is used to train the CRF model, and the test dataset is used to evaluate the built model.
+The data set given to us is in the .json format and contains 78,313 customer complaints with 22 features. We need to convert this to a dataframe in order to process the given complaints.
 
 ## Approach
 
-#### Understanding the Dataset
+We need to perform the following eight major tasks to complete the assignment:
 
-- To gain insights from data we must look into each aspect of it very carefully. We will start with observing few rows and columns of data both from the starting and from the end.
+- Data loading
+- Text preprocessing
+- Exploratory data analysis (EDA)
+- Feature extraction
+- Topic modelling
+- Model building using supervised learning
+- Model training and evaluation
+- Model inference
 
-#### Preprocessing
+Note: Once we have finalised the clusters/categories for customer complaints, the next step is to create a data set that contains the complaints and labels (which we found using NMF). This labelled data set will be used for model building using supervised learning.
 
-- We need to process and modify the data into sentence format. This step has to be done for the 'train_sent' and ‘train_label’ datasets and for test datasets as well.
-- After that, we need to define the features to build the CRF model.
-- Then, you need to apply these features in each sentence of the train and the test dataset to get the feature values.
-- Once the features are computed, you need to define the target variable and then build the CRF model.
-- Then, we need to perform the evaluation using a test data set.
-- After that, we need to create a dictionary in which diseases are keys and treatments are values
-
-#### Build Model after Dataset split
-
-- Build model & validate results after split dataset in train & test repsectiviey using CRF (Conditional Random Field) classifier
+We need to try at least any three models from logistic regression, naive Bayes, decision tree and random forest, then will select the model that performs the best according to the evaluation metrics.
 
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
@@ -92,12 +64,7 @@ It contains four data file for this activity to proceed, they are
 
 Based on our analysis and as per our Model, below are observationn:
 
-- Predicted F1-score for Medical Entity Dataset is: **92.5 %**
-
-Also the predicted the treatment for the disease name: 'hereditary retinoblastoma' is:
-
-- Identified Disease: **retinoblastoma**.
-- Identified Treatment: **radiotherapy**.
+- Logistic Regression model is predicting well on custom data with F1 score : 0.93
 
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
@@ -109,6 +76,7 @@ Also the predicted the treatment for the disease name: 'hereditary retinoblastom
 - pycrf
 - sklearn-crfsuite
 - spacy
+- nlptk
 - Jupyter Notebook
 
 <!-- As the libraries versions keep on changing, it is recommended to mention the version of library used in this project -->
